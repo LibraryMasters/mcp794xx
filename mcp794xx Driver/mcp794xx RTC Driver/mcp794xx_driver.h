@@ -354,7 +354,8 @@ typedef struct mcp794xx_handle_s
     void (*delay_ms)(uint32_t u32Ms);                                                           /**< point to a delay_ms function address */
     void(*debug_print)(char *fmt, ...);                                                         /**< point to a debug_print function address */
     void (*receive_callback)(uint8_t u8Flag, uint8_t u8Status);                                 /**< point to a receive callback function address */
-    uint8_t i2c_address;                                                                        /**< i2c device address */
+    uint8_t rtc_address;                                                                        /**< rtc device address */
+    uint8_t eeprom_address;                                                                        /**< eeprom device address */
     uint8_t device_variant;                                                                     /**< Device variant */
     uint8_t inited;                                                                             /**< Driver initialize status bit */
 } mcp794xx_handle_t;
@@ -513,14 +514,14 @@ uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle);
 /**
  * @brief     This function set the address pin
  * @param[in] pHandle points to a mcp794xx pHandle structure
- * @param[in] i2c_address is the chip i2c address pins
+ * @param[in] pI2c_address point to both i2c addresses pins
  * @return  status code
  *            - 0 success
  *            - 2 pHandle is NULL
  *            - 3 pHandle is not initialized
  * @note      none
  */
-uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_addr_t i2c_address);
+uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_addr_t *pI2c_address);
 
 /**
  * @brief     This function set the chip variant
@@ -1210,7 +1211,7 @@ uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle);
  * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] reg is the i2c register address
  * @param[in] *buf points to a data buffer
- * @param[in] len is the data buffer length
+ * @param[in] u8Len is the data buffer length
  * @return    status code
  *            - 0 success
  *            - 1 write failed
@@ -1225,7 +1226,7 @@ uint8_t mcp794xx_set_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_
  * @param[in]  pHandle points to a mcp794xx handle structure
  * @param[in]  reg is the i2c register address
  * @param[out] *buf points to a data buffer
- * @param[in]  len is the data buffer length
+ * @param[in]  u8Len is the data buffer length
  * @return     status code
  *             - 0 success
  *             - 1 read failed
