@@ -82,56 +82,56 @@
 #define MCP794XX_PWR_UP_MONTH_REG                    0x1F                           /**< Power up month register */
 
 /** Time Keeping Register Mask **/
-#define MCP794XX_ST_MASK                             0x80                           /**< */
-#define MCP794XX_SEC_BCD_MASK                        0x7F                           /**< */
-#define MCP794XX_MIN_BCD_MASK                        0x7F                           /**< */
-#define MCP794XX_12HR_24HR_FRMT_STAT_MASK            0x40                           /**< */
-#define MCP794XX_TIME_AM_PM_MASK                     0x20                           /**< */
-#define MCP794XX_12HR_FRMT_BCD_MASK                  0x1F                           /**< */
-#define MCP794XX_24HR_FRMT_BCD_MASK                  0x3F                           /**< */
-#define MCP794XX_OSC_RUN_STATUS_MASK                 0x20                           /**< */
-#define MCP794XX_PWR_FAIL_STATUS_MASK                0x10                           /**< */
-#define MCP794XX_VBAT_EN_MASK                        0x08                           /**< */
-#define MCP794XX_WKDAY_BCD_MASK                      0x07                           /**< */
-#define MCP794XX_DATE_BCD_MASK                       0x3F                           /**< */
-#define MCP794XX_LEAP_YEAR_STATUS_MASK               0x20                           /**< */
-#define MCP794XX_MONTH_BCD_MASK                      0x1F                           /**< */
-#define MCP794XX_YEAR_BCD_MASK                       0xFF                           /**< */
+#define MCP794XX_ST_MASK                             0x80                           /**< Start Oscillator mask */
+#define MCP794XX_SEC_BCD_MASK                        0x7F                           /**< BCD value of seconds mask */
+#define MCP794XX_MIN_BCD_MASK                        0x7F                           /**< BCD value of minutes mask */
+#define MCP794XX_12HR_24HR_FRMT_STAT_MASK            0x40                           /**< Time hour format mask */
+#define MCP794XX_TIME_AM_PM_MASK                     0x20                           /**< Am/PM indicator mask */
+#define MCP794XX_12HR_FRMT_BCD_MASK                  0x1F                           /**< BCD value of hour in 12 format mask */
+#define MCP794XX_24HR_FRMT_BCD_MASK                  0x3F                           /**< BCD value of hour in 24 format mask */
+#define MCP794XX_OSC_RUN_STATUS_MASK                 0x20                           /**< Oscillator run status mask */
+#define MCP794XX_PWR_FAIL_STATUS_MASK                0x10                           /**< Power fail status mask */
+#define MCP794XX_VBAT_EN_MASK                        0x08                           /**< Battery backup enable mask */
+#define MCP794XX_WKDAY_BCD_MASK                      0x07                           /**< BCD value of Week day mask */
+#define MCP794XX_DATE_BCD_MASK                       0x3F                           /**< BCD value of date mask */
+#define MCP794XX_LEAP_YEAR_STATUS_MASK               0x20                           /**< BCD value of leap Year mask */
+#define MCP794XX_MONTH_BCD_MASK                      0x1F                           /**< BCD value of month mask */
+#define MCP794XX_YEAR_BCD_MASK                       0xFF                           /**< BCD value of year mask */
 
 /** Alarm Configuration Mask **/
-#define MCP794XX_ALARMx_SEC_BCD_MASK                 0x7F                           /**< */
-#define MCP794XX_ALARMx_MIN_BCD_MASK                 0x7F                           /**< */
-#define MCP794XX_ALARMx_12HR_24HR_FRMT_STAT_MASK     0x40                           /**< */
-#define MCP794XX_ALARMx_AM_PM_MASK                   0x20                           /**< */
-#define MCP794XX_ALARMx_12HR_FRMT_BCD_MASK           0x1F                           /**< */
-#define MCP794XX_ALARMx_24HR_FRMT_BCD_MASK           0x3F                           /**< */
-#define MCP794XX_ALARMx_INT_POL_MASK                 0x8F                           /**< */
-#define MCP794XX_ALARMx_TYPE_MASK                    0x7F                           /**< */
-#define MCP794XX_ALARMx_IF_MASK                      0x08                           /**< */
-#define MCP794XX_ALARMx_WDAY_MASK                    0x07                           /**< */
-#define MCP794XX_ALARMx_DATE_MASK                    0x3F                           /**< */
-#define MCP794XX_ALARMx_MONTH_MASK                   0x1F                           /**< */
+#define MCP794XX_ALARMx_SEC_BCD_MASK                 0x7F                           /**< Alarm BCD value seconds mask */
+#define MCP794XX_ALARMx_MIN_BCD_MASK                 0x7F                           /**< Alarm BCD value minute mask */
+#define MCP794XX_ALARMx_12HR_24HR_FRMT_STAT_MASK     0x40                           /**< Alarm hour format mask */
+#define MCP794XX_ALARMx_AM_PM_MASK                   0x20                           /**< Alarm am/pm indicator mask */
+#define MCP794XX_ALARMx_12HR_FRMT_BCD_MASK           0x1F                           /**< Alarm BCD value of hour in 12 format mask */
+#define MCP794XX_ALARMx_24HR_FRMT_BCD_MASK           0x3F                           /**< Alarm BCD value of hour in 24 format mask */
+#define MCP794XX_ALARMx_INT_POL_MASK                 0x8F                           /**< Alarm interrupt polarity mask */
+#define MCP794XX_ALARMx_TYPE_MASK                    0x7F                           /**< Alarm type mask */
+#define MCP794XX_ALARMx_IF_MASK                      0x08                           /**< Alarm interrupt flag mask */
+#define MCP794XX_ALARMx_WDAY_MASK                    0x07                           /**< Alarm BCD value week day mask */
+#define MCP794XX_ALARMx_DATE_MASK                    0x3F                           /**< Alarm BCD value date mask */
+#define MCP794XX_ALARMx_MONTH_MASK                   0x1F                           /**< Alarm BCD value month mask */
 
 /** Control Register Mask **/
-#define MCP794XX_CTRL_OUT_MASK                       0x80                           /**< */
-#define MCP794XX_CTRL_SQR_WAVE_EN_MASK               0x40                           /**< */
-#define MCP794XX_CTRL_ALARM1_EN_MASK                 0x20                           /**< */
-#define MCP794XX_CTRL_ALARM0_EN_MASK                 0x10                           /**< */
-#define MCP794XX_CTRL_EXTR_OSC_EN_MASK               0x08                           /**< */
-#define MCP794XX_CTRL_CRS_TRIM_EN_MASK               0x04                           /**< */
-#define MCP794XX_CTRL_SQR_WAVE_FREQ_SELEC_MASK       0x03                           /**< */
-#define MCP794XX_TRIM_SIGN_MASK                      0x80                           /**< */
-#define MCP794XX_TRIM_VAL_MASK                       0x7F                           /**< */
+#define MCP794XX_CTRL_OUT_MASK                       0x80                           /**< General purpose output bit enable mask */
+#define MCP794XX_CTRL_SQR_WAVE_EN_MASK               0x40                           /**< Square wave enable bit mask*/
+#define MCP794XX_CTRL_ALARM1_EN_MASK                 0x20                           /**< Alarm 1 enable bit mask */
+#define MCP794XX_CTRL_ALARM0_EN_MASK                 0x10                           /**< Alarm 0 enable bit mask */
+#define MCP794XX_CTRL_EXTR_OSC_EN_MASK               0x08                           /**< external oscillator enable bit mask */
+#define MCP794XX_CTRL_CRS_TRIM_EN_MASK               0x04                           /**< coarse trim enable bit mask */
+#define MCP794XX_CTRL_SQR_WAVE_FREQ_SELEC_MASK       0x03                           /**< Square wave freq out select mask */
+#define MCP794XX_TRIM_SIGN_MASK                      0x80                           /**< Trim clock cycle sign mask*/
+#define MCP794XX_TRIM_VAL_MASK                       0x7F                           /**< Coarse trim value mask */
 
 /** Power Down/Power-up Time stamp Mask **/
-#define MCP794XX_PWRXX_MIN_BCD_MASK                  0x7F                           /**< Power down/up minute mask */
-#define MCP794XX_PWRXX_12HR_24HR_FRMT_STAT_MASK      0x40                           /**< Power down/up hour format mask*/
+#define MCP794XX_PWRXX_MIN_BCD_MASK                  0x7F                           /**< Power down/up BCD value minute mask */
+#define MCP794XX_PWRXX_12HR_24HR_FRMT_STAT_MASK      0x40                           /**< Power down/up BCD value hour format mask*/
 #define MCP794XX_PWRXX_TIME_AM_PM_MASK               0x20                           /**< Power down/up am/pm indicator mask */
-#define MCP794XX_PWRXX_12HR_FRMT_BCD_MASK            0x1F                           /**< Power down/up hour in 12 format mask */
+#define MCP794XX_PWRXX_12HR_FRMT_BCD_MASK            0x1F                           /**< Power down/up BCD value hour in 12 format mask */
 #define MCP794XX_PWRXX_24HR_FRMT_BCD_MASK            0x3F                           /**< Power down/up hour in 24 format mask */
-#define MCP794XX_PWRXX_DATE_BCD_MASK                 0x3F                           /**< Power down/up Date mask */
-#define MCP794XX_PWRXX_WKDAY_BCD_MASK                0xE0                           /**< Power down/up week day mask */
-#define MCP794XX_PWRXX_MONTH_BCD_MASK                0x1F                           /**< Power down/up month mask */
+#define MCP794XX_PWRXX_DATE_BCD_MASK                 0x3F                           /**< Power down/up BCD value Date mask */
+#define MCP794XX_PWRXX_WKDAY_BCD_MASK                0xE0                           /**< Power down/up BCD value week day mask */
+#define MCP794XX_PWRXX_MONTH_BCD_MASK                0x1F                           /**< Power down/up BCD value month mask */
 
 #define PCF8523_TIME_BUFFER_SIZE    7                                               /**< Time buffer size */
 
@@ -466,7 +466,7 @@ typedef struct mcp794xx_info_s
 
 /**
  * @brief      get chip's information
- * @param[out] *pInfo points to mcp794xx info structure
+ * @param[out] pInfo points to mcp794xx info structure
  * @return  status code
  *             - 0 success
  *             - 2 pHandle is NULL
@@ -476,7 +476,7 @@ uint8_t mcp794xx_info(mcp794xx_info_t *pInfo);
 
 /**
  * @brief     This function initialize the chip
- * @param[in] *pHandle points to mcp794xx pHandle structure
+ * @param[in] pHandle points to mcp794xx pHandle structure
  * @return  status code
  *            - 0 success
  *            - 1 i2c initialization failed
@@ -488,7 +488,7 @@ uint8_t mcp794xx_init(mcp794xx_handle_t *const pHandle);
 
 /**
  * @brief     This function close the chip
- * @param[in] *pHandle points to mcp794xx pHandle structure
+ * @param[in] pHandle points to mcp794xx pHandle structure
  * @return  status code
  *            - 0 success
  *            - 1 i2c deinit failed
@@ -500,7 +500,7 @@ uint8_t mcp794xx_deinit(mcp794xx_handle_t *const pHandle);
 
 /**
  * @brief     This function execute irq pHandler
- * @param[in] *pHandle points to mcp794xx pHandle structure
+ * @param[in] pHandle points to mcp794xx pHandle structure
  * @return  status code
  *            - 0 success
  *            - 1 run failed
@@ -512,7 +512,7 @@ uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle);
 
 /**
  * @brief     This function set the address pin
- * @param[in] *pHandle points to a mcp794xx pHandle structure
+ * @param[in] pHandle points to a mcp794xx pHandle structure
  * @param[in] i2c_address is the chip i2c address pins
  * @return  status code
  *            - 0 success
@@ -524,7 +524,7 @@ uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_add
 
 /**
  * @brief     This function set the chip variant
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] variant is the chip variant type
  * @return    status code
  *            - 0 success
@@ -537,8 +537,8 @@ uint8_t mcp794xx_set_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
 
 /**
  * @brief     This function get the chip variant
- * @param[in] *handle points to mcp794xx handle structure
- * @param[out] *pVariant point to the chip variant type
+ * @param[in] pHandle points to mcp794xx handle structure
+ * @param[out] pVariant point to the chip variant type
  * @return    status code
  *            - 0 success
  *            - 1 get variant failed
@@ -550,8 +550,8 @@ uint8_t mcp794xx_get_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
 
 /**
  * @brief     This function set the time
- * @param[in] *handle points to a mcp794xx handle structure
- * @param[in] *time point to the date and time struct object
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] pTime point to the date and time struct object
  * @return    status code
  *            - 0 success
  *            - 1 set time failed
@@ -564,8 +564,8 @@ uint8_t mcp794xx_set_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
 
 /**
  * @brief      This function get the current time and date
- * @param[in]  *handle points to a mcp794xx handle structure
- * @param[out] *time points to a time struct object
+ * @param[in]  pHandle points to a mcp794xx handle structure
+ * @param[out] pTime points to a time struct object
  * @return     status code
  *             - 0 success
  *             - 1 set time failed
@@ -577,7 +577,7 @@ uint8_t mcp794xx_get_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
 
 /**
  * @brief This function set the time format 12hr or 24hr
- * @param[in] *handle points to a mcp794xx handle structure
+ * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] format hour format
  * @return status code
  *          - 0 success
@@ -588,8 +588,8 @@ uint8_t mcp794xx_set_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
 
 /**
  * @brief This function get the time format 12hr or 24hr
- * @param[in] *handle points to a mcp794xx handle structure
- * @param[in] *format point to hour format (12hr/24hr)
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pFormat format point to hour format (12hr/24hr)
  * @return status code
  *          - 0 success
  *          - 1 failed to set time format
@@ -599,7 +599,7 @@ uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
 
 /**
  * @brief This function set AM or PM indicator for 12hr time format
- * @param[in] *handle points to a mcp794xx handle structure
+ * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] am_pm is the indicator period for 12hr time format
  * @return status code
  *          - 0 success
@@ -610,66 +610,386 @@ uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
 uint8_t mcp794xx_set_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t am_pm);
 
 /**
- * @brief get AM or PM time for 12hr time format
- * @param[in] *handle points to a mcp794xx handle structure
- * @param[in] *am_pm point to the indicator period for 12hr time format
+ * @brief This function get the AM or PM time indicator for 12hr time format
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pAm_pm point to the indicator period for 12hr time format
  * @return status code
  *          - 0 success
  *          - 1 failed to get AM/PM period
             - 2 handle null
  *          - 3 handle is not initialized
  */
-uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t *am_pm);
+uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t *pAm_pm);
 
+/**
+ * @brief This function set the oscillator status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status point to the status to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed to set oscillator status bit
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
 uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t status);
+
+/**
+ * @brief This function get the oscillator status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the status to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed to set oscillator status bit
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
 uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t *pStatus);
 
+/**
+ * @brief This function set the power fail status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the status to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
 uint8_t mcp794xx_set_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t status);
-uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t *Status);
 
-uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx_leap_year_status_t *pLeapYearStatus);
+/**
+ * @brief This function get the power fail status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the status be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t *pStatus);
 
-uint8_t mcp794xx_set_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t polarity);
-uint8_t mcp794xx_get_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t *pPolarity);
-
-uint8_t mcp794xx_set_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t mask, mcp794xx_time_t *pTime);
-uint8_t mcp794xx_get_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t *pMask, mcp794xx_time_t *pTime);
-
-uint8_t mcp794xx_get_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_int_flag_t flag);
-uint8_t mcp794xx_clr_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm);
-
-uint8_t mcp794xx_set_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t logicSate);
-uint8_t mcp794xx_get_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t *pLogicSate);
-
-uint8_t mcp94xx_set_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t freq);
-uint8_t mcp94xx_get_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t *pFreq);
-
-uint8_t mcp794xx_set_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t sign, mcp794xx_trim_val_t value);
-uint8_t mcp794xx_get_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t *pSign, mcp794xx_trim_val_t value);
-
-uint8_t mcp794xx_set_start_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t mcp794xx_get_start_os_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-uint8_t  mcp794xx_set_ext_batt_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t  mcp794xx_get_ext_batt_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-uint8_t mcp794xx_set_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t mcp794xx_get_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-uint8_t mcp794xx_set_ext_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t mcp794xx_get_ext_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-uint8_t mcp794xx_set_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
-uint8_t mcp794xx_get_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
-
-
+/**
+ * @brief This function get the power fail time stamp
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] powerMode is the power fail mode (power-up/power-down)
+ * @param[out] pTime point to the time struct object
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
 uint8_t mcp794xx_get_pwr_fail_time_stamp(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_type_t powerMode, mcp794xx_time_t *pTime);
 
+/**
+ * @brief This function get the power fail time stamp
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] powerMode is the power fail mode (power-up/power-down)
+ * @param[out] pTime point to the time struct object
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx_leap_year_status_t *pLeapYearStatus);
 
-/************EEPROM FUNCTIONS*****************/
+ /**
+ * @brief This function set the alarm enable status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+ /**
+ * @brief This function set the alarm enable status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
+/**
+ * @brief This function set the alarm interrupt output pin polarity
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] polarity is the polarity to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t polarity);
+
+/**
+ * @brief This function get the alarm interrupt output pin polarity
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pPolarity point to the polarity set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t *pPolarity);
+
+/**
+ * @brief This function set the alarm
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] alarm is the alarm type (ALARM0/ALARM1)
+ * @param[in] mask is the alarm mask to be set (second/minute/hour/.. etc)
+ * @param[in] pTime point to the alarm time to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t mask, mcp794xx_time_t *pTime);
+
+/**
+ * @brief This function get the alarm status
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] alarm is the alarm type (ALARM0/ALARM1)
+ * @param[out] pMask point to the alarm mask set (second/minute/hour/.. etc)
+ * @param[out] pTime point to the alarm time set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t *pMask, mcp794xx_time_t *pTime);
+
+/**
+ * @brief This function get the alarm interrupt flag
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] alarm is the alarm type (ALARM0/ALARM1)
+ * @param[out] flag is the interrupt flag read
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_int_flag_t flag);
+
+/**
+ * @brief This function clears the alarm interrupt flag
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] alarm is the alarm type (ALARM0/ALARM1)
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_clr_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm);
+
+/**
+ * @brief This function set the general purpose output pin level
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] logicLevel is the logic level to be set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t logicLevel);
+
+/**
+ * @brief This function get the general purpose output pin level
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pLogicLevel point to the logic level set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t *pLogicLevel);
+
+/**
+ * @brief This function set the square wave frequency clock output on MFP
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] freq is the frequency clock output to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp94xx_set_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t freq);
+
+/**
+ * @brief This function get the square wave frequency clock output on MFP
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pFreq point to the frequency clock output set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp94xx_get_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t *pFreq);
+
+/**
+ * @brief This function enables/disables the square wave clock freq. output
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+/**
+ * @brief This function get enables/disables the square wave clock freq. status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
+/**
+ * @brief This function set the Oscillator Trim Value
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] sign is the arithmetic operation (+/-)
+ * @param[in] value is the clock cycle value to the added or subtracted
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t sign, mcp794xx_trim_val_t value);
+
+/**
+ * @brief This function get the Oscillator Trim Value
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pSign point to the arithmetic operation set (+/-)
+ * @param[out] pValue point to the clock cycle value to the added or subtracted
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t *pSign, mcp794xx_trim_val_t *pValue);
+
+/**
+ * @brief This function set the coarse trim mode enable status
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+/**
+ * @brief This function get the coarse trim mode enable status
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
+/**
+ * @brief This function set the oscillator run enable status
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_start_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+/**
+ * @brief This function get the oscillator run enable status
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_start_os_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
+/**
+ * @brief This function set the external battery enable status bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t  mcp794xx_set_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+/**
+ * @brief This function get the external battery enable bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t  mcp794xx_get_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
+/**
+ * @brief This function set the external oscillator enable bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[in] status is the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_set_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status);
+
+/**
+ * @brief This function get the external oscillator enable bit
+ * @param[in] pHandle points to a mcp794xx handle structure
+ * @param[out] pStatus point to the enable boolean status to set
+ * @return status code
+ *          - 0 success
+ *          - 1 failed
+            - 2 handle null
+ *          - 3 handle is not initialized
+ */
+uint8_t mcp794xx_get_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus);
+
 /**
  * @brief     This function get the device serial number
  * @param[in] *pHandle points to mcp794xx pHandle structure
@@ -685,7 +1005,7 @@ uint8_t mcp794xx_get_serial_number(mcp794xx_handle_t *const pHandle, uint32_t *p
 
 /**
  * @brief     This function write n byte to eeprom
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] addr is the eeprom address to write to
  * @param[in] *buf points to data buffer to be written
  * @param[in] u16Length is the data buffer length
@@ -703,7 +1023,7 @@ uint8_t mcp794xx_eeprom_write_byte(mcp794xx_handle_t *const pHandle, uint16_t u1
 
 /**
  * @brief     This function read n byte to eeprom
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] addr is the eeprom address to read
  * @param[out] *buf points to data buffer read
  * @param[in] length is the data buffer length
@@ -719,7 +1039,7 @@ uint8_t mcp794xx_eeprom_read_byte(mcp794xx_handle_t *const pHandle, uint16_t u16
 
 /**
  * @brief     This function writes data larger than a byte > 255 (equivalent to eeprom.put on Arduino)
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] addr is the eeprom address to start writing
  * @param[in] *buf points to data buffer write
  * @param[in] u8Length is the buffer size
@@ -738,7 +1058,7 @@ uint8_t mcp794xx_eeprom_put_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
 
 /**
  * @brief     This function reads data larger than a byte > 255 (equivalent to eeprom.get on Arduino)
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] addr is the eeprom address to start writing
  * @param[out] *buf points to data buffer read
  * @param[in] u8Length is the buffer size
@@ -755,7 +1075,7 @@ uint8_t mcp794xx_eeprom_get_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
 
 /**
  * @brief     This function erase eeprom page
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] u8PageNumber is the eeprom page number to erase
  * @return    status code
  *            - 0 success
@@ -769,7 +1089,7 @@ uint8_t mcp794xx_eeprom_erase_page(mcp794xx_handle_t *const pHandle, uint8_t u8P
 
 /**
  * @brief     This function erase a sector stored data
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] pSector_addr is the eeprom sector address (start address and end address) to erase
  * @return    status code
  *            - 0 success
@@ -783,7 +1103,7 @@ uint8_t mcp794xx_eeprom_erase_sector(mcp794xx_handle_t *const pHandle, uint8_t *
 
 /**
  * @brief     This function erase chip stored data
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @return    status code
  *            - 0 success
  *            - 1 erase failed
@@ -796,7 +1116,7 @@ uint8_t mcp794xx_eeprom_erase_chip(mcp794xx_handle_t *const pHandle);
 
 /**
  * @brief     This function set write enable latch status
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] status is the value to write
  * @return    status code
  *            - 0 success
@@ -809,7 +1129,7 @@ uint8_t mcp794xx_eeprom_set_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
 
 /**
  * @brief     This function get write enable latch status
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[out] *pStatus is the value to write
  * @return    status code
  *            - 0 success
@@ -822,7 +1142,7 @@ uint8_t mcp794xx_eeprom_get_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
 
 /**
  * @brief This function runs basic checks before writing
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] u8Address is the address to write
  * @return status code
  *          - 0 success
@@ -873,7 +1193,7 @@ uint8_t mcp794xxx_eeprom_validate_page(mcp794xx_handle_t *const pHandle, uint8_t
 
 /**
  * @brief     This function get the size of eeprom in byte
- * @param[in] *handle points to mcp794xx handle structure
+ * @param[in] pHandle points to mcp794xx handle structure
  * @param[in] length is the eeprom size in byte
  * @return    status code
  *            - 0 success
@@ -887,7 +1207,7 @@ uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle);
 
 /**
  * @brief     set the chip register
- * @param[in] *handle points to a mcp794xx handle structure
+ * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] reg is the i2c register address
  * @param[in] *buf points to a data buffer
  * @param[in] len is the data buffer length
@@ -902,7 +1222,7 @@ uint8_t mcp794xx_set_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_
 
 /**
  * @brief      get the chip register
- * @param[in]  *handle points to a mcp794xx handle structure
+ * @param[in]  pHandle points to a mcp794xx handle structure
  * @param[in]  reg is the i2c register address
  * @param[out] *buf points to a data buffer
  * @param[in]  len is the data buffer length
