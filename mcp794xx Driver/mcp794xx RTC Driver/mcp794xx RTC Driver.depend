@@ -1,0 +1,59 @@
+# depslib dependency file v1.0
+1584205420 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1683376532 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver.c
+	"mcp749xx_driver.h"
+
+1683377191 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<stdbool.h>
+	<stdlib.h>
+	<stdarg.h>
+	<math.h>
+
+1683376559 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver_basic.c
+	"mcp749xx_driver_basic.h"
+
+1683376825 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver_basic.h
+	"mcp749xx_driver_interface.h"
+
+1683377055 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver_interface.h
+	"mcp749xx_driver.h"
+
+1683377030 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver_interface.c
+	"mcp749xx_driver_interface.h"
+
+1584205420 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1683460586 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.c
+	"mcp794xx_driver.h"
+
+1684941493 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdint.h>
+	<stdbool.h>
+	<stdlib.h>
+	<stdarg.h>
+	<math.h>
+
+1683460596 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_basic.c
+	"mcp794xx_driver_basic.h"
+
+1683460556 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_basic.h
+	"mcp794xx_driver_interface.h"
+
+1683463549 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_interface.h
+	"mcp794xx_driver.h"
+
+1683530585 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_interface.c
+	"mcp794xx_driver_interface.h"
+
