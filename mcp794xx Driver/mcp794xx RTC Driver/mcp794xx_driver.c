@@ -36,7 +36,7 @@
 #define MANUFACTURER_NAME         "Microchip"            /**< manufacturer name */
 #define SUPPLY_VOLTAGE_MIN        1.3f                   /**< chip min supply voltage */
 #define SUPPLY_VOLTAGE_MAX        5.5f                   /**< chip max supply voltage */
-#define MAX_CURRENT               400                    /**< chip max current (uA)*/
+#define MAX_CURRENT               400                    /**< chip max current (μA)*/
 #define MIN_CURRENT               300                    /**< chip min current (μA)*/
 #define TEMPERATURE_MIN           -40.0f                 /**< chip min operating temperature (°C) */
 #define TEMPERATURE_MAX           85.0f                  /**< chip max operating temperature (°C) */
@@ -165,7 +165,17 @@ uint8_t mcp794xx_init(mcp794xx_handle_t *const pHandle)
  */
 uint8_t mcp794xx_deinit(mcp794xx_handle_t *const pHandle)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -180,7 +190,17 @@ uint8_t mcp794xx_deinit(mcp794xx_handle_t *const pHandle)
  */
 uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -196,6 +216,18 @@ uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle)
 uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_addr_t *pI2c_address)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;           /**< success */
 }
 
 /**
@@ -212,6 +244,18 @@ uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_add
 uint8_t mcp794xx_set_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_t variant)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+    if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;           /**< success */
 }
 
 /**
@@ -228,12 +272,24 @@ uint8_t mcp794xx_set_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
 uint8_t mcp794xx_get_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_t *pVariant)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;           /**< success */
 }
 
 /**
  * @brief     This function set the time
  * @param[in] pHandle points to a mcp794xx handle structure
- * @param[in] pTime point to the date and time struct object
+ * @param[in] pTime point to the date and time structure object
  * @return    status code
  *            - 0 success
  *            - 1 set time failed
@@ -245,12 +301,24 @@ uint8_t mcp794xx_get_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
 uint8_t mcp794xx_set_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTime)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;           /**< success */
 }
 
 /**
  * @brief      This function get the current time and date
  * @param[in]  pHandle points to a mcp794xx handle structure
- * @param[out] pTime points to a time struct object
+ * @param[out] pTime points to a time structure object
  * @return     status code
  *             - 0 success
  *             - 1 set time failed
@@ -261,6 +329,18 @@ uint8_t mcp794xx_set_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
 uint8_t mcp794xx_get_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTime)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;           /**< success */
 }
 
 /**
@@ -275,6 +355,18 @@ uint8_t mcp794xx_get_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
 uint8_t mcp794xx_set_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour_format_t format)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -289,6 +381,18 @@ uint8_t mcp794xx_set_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
 uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour_format_t *pFormat)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -304,6 +408,18 @@ uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
 uint8_t mcp794xx_set_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t am_pm)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -319,6 +435,18 @@ uint8_t mcp794xx_set_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indi
 uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t *pAm_pm)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -334,6 +462,18 @@ uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indi
 uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -349,10 +489,22 @@ uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_s
 uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
- * @brief This function set the power fail status bit
+ * @brief This function clears the power fail status bit
  * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] status is the status to be set
  * @return status code
@@ -361,9 +513,21 @@ uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_s
             - 2 handle null
  *          - 3 handle is not initialized
  */
-uint8_t mcp794xx_set_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t status)
+uint8_t mcp794xx_clr_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -379,6 +543,18 @@ uint8_t mcp794xx_set_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_
 uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -395,13 +571,24 @@ uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_
 uint8_t mcp794xx_get_pwr_fail_time_stamp(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_type_t powerMode, mcp794xx_time_t *pTime)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
- * @brief This function get the power fail time stamp
+ * @brief This function get the leap year status
  * @param[in] pHandle points to a mcp794xx handle structure
- * @param[in] powerMode is the power fail mode (power-up/power-down)
- * @param[out] pTime point to the time struct object
+ * @param[out] pLeapYearStatus point to leap year status
  * @return status code
  *          - 0 success
  *          - 1 failed
@@ -411,6 +598,18 @@ uint8_t mcp794xx_get_pwr_fail_time_stamp(mcp794xx_handle_t *const pHandle, mcp79
 uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx_leap_year_status_t *pLeapYearStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
  /**
@@ -426,6 +625,18 @@ uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx
 uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
  /**
@@ -441,6 +652,18 @@ uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp79
 uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -456,6 +679,18 @@ uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp79
 uint8_t mcp794xx_set_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t polarity)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -471,6 +706,18 @@ uint8_t mcp794xx_set_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle,
 uint8_t mcp794xx_get_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle, mcp794xx_int_output_polarity_t *pPolarity)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -487,6 +734,19 @@ uint8_t mcp794xx_get_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle,
  */
 uint8_t mcp794xx_set_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t mask, mcp794xx_time_t *pTime)
 {
+
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 
 }
 
@@ -505,6 +765,18 @@ uint8_t mcp794xx_set_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t al
 uint8_t mcp794xx_get_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_mask_t *pMask, mcp794xx_time_t *pTime)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -521,6 +793,18 @@ uint8_t mcp794xx_get_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t al
 uint8_t mcp794xx_get_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm, mcp794xx_alarm_int_flag_t flag)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -536,6 +820,18 @@ uint8_t mcp794xx_get_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp7
 uint8_t mcp794xx_clr_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t alarm)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -551,6 +847,18 @@ uint8_t mcp794xx_clr_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp7
 uint8_t mcp794xx_set_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t logicLevel)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -566,6 +874,18 @@ uint8_t mcp794xx_set_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_
 uint8_t mcp794xx_get_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_mfp_logic_level_t *pLogicLevel)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -581,6 +901,18 @@ uint8_t mcp794xx_get_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_
 uint8_t mcp94xx_set_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t freq)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -596,6 +928,18 @@ uint8_t mcp94xx_set_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_
 uint8_t mcp94xx_get_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_wave_freq_t *pFreq)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -611,6 +955,18 @@ uint8_t mcp94xx_get_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_
 uint8_t mcp794xx_set_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -626,6 +982,18 @@ uint8_t mcp794xx_set_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mc
 uint8_t mcp794xx_get_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -642,6 +1010,18 @@ uint8_t mcp794xx_get_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mc
 uint8_t mcp794xx_set_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t sign, mcp794xx_trim_val_t value)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -658,6 +1038,18 @@ uint8_t mcp794xx_set_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_si
 uint8_t mcp794xx_get_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_sign_t *pSign, mcp794xx_trim_val_t *pValue)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -673,6 +1065,18 @@ uint8_t mcp794xx_get_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_si
 uint8_t mcp794xx_set_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -688,6 +1092,18 @@ uint8_t mcp794xx_set_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, m
 uint8_t mcp794xx_get_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -703,6 +1119,18 @@ uint8_t mcp794xx_get_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, m
 uint8_t mcp794xx_set_start_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -718,6 +1146,18 @@ uint8_t mcp794xx_set_start_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx
 uint8_t mcp794xx_get_start_os_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -733,6 +1173,18 @@ uint8_t mcp794xx_get_start_os_status(mcp794xx_handle_t *const pHandle, mcp794xx_
 uint8_t  mcp794xx_set_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -748,6 +1200,18 @@ uint8_t  mcp794xx_set_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, m
 uint8_t  mcp794xx_get_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -763,6 +1227,18 @@ uint8_t  mcp794xx_get_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, m
 uint8_t mcp794xx_set_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -778,6 +1254,18 @@ uint8_t mcp794xx_set_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp
 uint8_t mcp794xx_get_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -794,6 +1282,18 @@ uint8_t mcp794xx_get_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp
 uint8_t mcp794xx_get_serial_number(mcp794xx_handle_t *const pHandle, uint32_t *pUID)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -815,6 +1315,18 @@ uint8_t mcp794xx_get_serial_number(mcp794xx_handle_t *const pHandle, uint32_t *p
 uint8_t mcp794xx_eeprom_write_byte(mcp794xx_handle_t *const pHandle, uint16_t u16Addr, uint8_t *pBuf, uint16_t u16Length)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -834,6 +1346,18 @@ uint8_t mcp794xx_eeprom_write_byte(mcp794xx_handle_t *const pHandle, uint16_t u1
 uint8_t mcp794xx_eeprom_read_byte(mcp794xx_handle_t *const pHandle, uint16_t u16Addr, uint8_t *pBuf, uint16_t u16Length)
 {
 
+
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -855,7 +1379,17 @@ uint8_t mcp794xx_eeprom_read_byte(mcp794xx_handle_t *const pHandle, uint16_t u16
 
 uint8_t mcp794xx_eeprom_put_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Addr, uint32_t *pBuf, uint8_t u8Length)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -875,7 +1409,17 @@ uint8_t mcp794xx_eeprom_put_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
 
 uint8_t mcp794xx_eeprom_get_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Addr, uint32_t *pBuf, uint8_t u8Length)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -893,6 +1437,17 @@ uint8_t mcp794xx_eeprom_get_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
 uint8_t mcp794xx_eeprom_erase_page(mcp794xx_handle_t *const pHandle, uint8_t u8PageNumber)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -909,7 +1464,17 @@ uint8_t mcp794xx_eeprom_erase_page(mcp794xx_handle_t *const pHandle, uint8_t u8P
  */
 uint8_t mcp794xx_eeprom_erase_sector(mcp794xx_handle_t *const pHandle, uint8_t *pSector_addr)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -924,7 +1489,17 @@ uint8_t mcp794xx_eeprom_erase_sector(mcp794xx_handle_t *const pHandle, uint8_t *
  */
 uint8_t mcp794xx_eeprom_erase_chip(mcp794xx_handle_t *const pHandle)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 
@@ -942,6 +1517,17 @@ uint8_t mcp794xx_eeprom_erase_chip(mcp794xx_handle_t *const pHandle)
 uint8_t mcp794xx_eeprom_set_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx_eeprom_block_protect_stat_t status)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -958,6 +1544,17 @@ uint8_t mcp794xx_eeprom_set_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
 uint8_t mcp794xx_eeprom_get_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx_eeprom_block_protect_stat_t *pStatus)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -971,7 +1568,17 @@ uint8_t mcp794xx_eeprom_get_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
  */
 uint8_t mcp794xx_eeprom_check_bp_before_write(mcp794xx_handle_t *const pHandle, uint8_t u8Address)
 {
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
 
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 
@@ -987,6 +1594,17 @@ uint8_t mcp794xx_eeprom_check_bp_before_write(mcp794xx_handle_t *const pHandle, 
 uint8_t mcp794xxx_eeprom_validate_address(mcp794xx_handle_t *const pHandle)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -1004,6 +1622,17 @@ uint8_t mcp794xxx_eeprom_validate_address(mcp794xx_handle_t *const pHandle)
 uint8_t mcp794xx_eeprom_validate_page_boundary(mcp794xx_handle_t *const pHandle, uint8_t u8Address, uint8_t u8Length)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -1021,6 +1650,17 @@ uint8_t mcp794xx_eeprom_validate_page_boundary(mcp794xx_handle_t *const pHandle,
 uint8_t mcp794xxx_eeprom_validate_page(mcp794xx_handle_t *const pHandle, uint8_t u8Page, uint8_t *pStartAddr)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 
 }
 
@@ -1035,8 +1675,20 @@ uint8_t mcp794xxx_eeprom_validate_page(mcp794xx_handle_t *const pHandle, uint8_t
  *            - 3 handle is not initialized
  * @note      none
  */
-uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle){
+uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle)
+{
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -1055,6 +1707,17 @@ uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle){
 uint8_t mcp794xx_set_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_t *buf, size_t u8Len)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+   if(err){
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -1073,6 +1736,18 @@ uint8_t mcp794xx_set_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_
 uint8_t mcp794xx_get_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_t *buf, size_t u8Len)
 {
 
+    if(pHandle == NULL)
+        return 2;     /**< return failed error */
+    if(pHandle->inited != 1)
+        return 3;      /**< return failed error */
+
+    if(err)
+    {
+
+        return 1;           /**< failed error */
+    }
+
+    return 0;              /**< success */
 }
 
 /**
@@ -1083,9 +1758,9 @@ uint8_t mcp794xx_get_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_
  *             - 2 pHandle is NULL
  * @note       none
  */
-uint8_t mcp794xx_info(mcp794xx_info_t *pInfo)
+uint8_t mcp794xx_info(mcp794xx_info_t *const pInfo)
 {
-        if (pInfo == NULL)     /**< check if handle is null */
+    if (pInfo == NULL)     /**< check if handle is null */
     {
         return 2;              /**<failed, return error */
     }

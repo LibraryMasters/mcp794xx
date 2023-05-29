@@ -7,9 +7,19 @@
 			<Cursor1 position="3448" topLine="52" />
 		</Cursor>
 	</File>
-	<File name="mcp794xx_driver.c" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1267" topLine="0" />
+			<Cursor1 position="107" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="mcp794xx_driver_interface.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3272" topLine="36" />
+		</Cursor>
+	</File>
+	<File name="mcp794xx_driver.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2962" topLine="48" />
 		</Cursor>
 	</File>
 	<File name="mcp794xx_driver_basic.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -17,19 +27,9 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="mcp794xx_driver.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="107" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="mcp794xx_driver_interface.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3272" topLine="36" />
-		</Cursor>
-	</File>
-	<File name="mcp794xx_driver.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="26229" topLine="481" />
+			<Cursor1 position="54087" topLine="1201" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

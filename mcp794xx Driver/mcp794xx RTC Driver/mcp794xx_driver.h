@@ -141,6 +141,8 @@
 #define EEPROM_HIGHEST_ADDRESS     127                                              /**< eeprom highest address allowed */
 #define EEPROM_UID_ADDRESS         0xF0                                             /**< eeprom unique ID address */
 
+static uint8_t err;
+
 /**
 * @brief execution status enumeration
 */
@@ -647,7 +649,7 @@ uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_s
 uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t *pStatus);
 
 /**
- * @brief This function set the power fail status bit
+ * @brief This function clears the power fail status bit
  * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] status is the status to be set
  * @return status code
@@ -656,7 +658,7 @@ uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_s
             - 2 handle null
  *          - 3 handle is not initialized
  */
-uint8_t mcp794xx_set_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t status);
+uint8_t mcp794xx_clr_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_pwr_fail_status_t status);
 
 /**
  * @brief This function get the power fail status bit
@@ -674,7 +676,7 @@ uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_
  * @brief This function get the power fail time stamp
  * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] powerMode is the power fail mode (power-up/power-down)
- * @param[out] pTime point to the time struct object
+ * @param[out] pTime point to the time structure object
  * @return status code
  *          - 0 success
  *          - 1 failed
@@ -687,7 +689,7 @@ uint8_t mcp794xx_get_pwr_fail_time_stamp(mcp794xx_handle_t *const pHandle, mcp79
  * @brief This function get the power fail time stamp
  * @param[in] pHandle points to a mcp794xx handle structure
  * @param[in] powerMode is the power fail mode (power-up/power-down)
- * @param[out] pTime point to the time struct object
+ * @param[out] pTime point to the time structure object
  * @return status code
  *          - 0 success
  *          - 1 failed
