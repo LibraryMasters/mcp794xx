@@ -40,6 +40,8 @@
 #define MIN_CURRENT               300                    /**< chip min current (μA)*/
 #define TEMPERATURE_MIN           -40.0f                 /**< chip min operating temperature (°C) */
 #define TEMPERATURE_MAX           85.0f                  /**< chip max operating temperature (°C) */
+#define MCU_FLASH_MIN             64                     /**< Micro-controller minimum recommended flash size (kB) */
+#define MCU_RAM_MIN               8                      /**< Micro-controller minimum recommended RAM size (KB)*/
 #define DRIVER_VERSION            1000                   /**< driver version */
 
 /**
@@ -47,15 +49,14 @@
 * @param[in] *pHandle points to mcp794xx handle structure
 * @param[in] u8Reg is the slave device register address
 * @param[in] *pBuf point to data to write
-* @param[in] u8Length is the data length to write (number of byte)
 * @return status code
             - 0 success
             - 1 failed to write
 * @note none
 */
-uint8_t rtc_mcp794xx_i2c_write(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, void *pBuf, uint8_t u8Length)
+uint8_t rtc_mcp794xx_i2c_write(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, void *pBuf)
 {
-    if(pHandle->i2c_write(pHandle->rtc_address, u8Reg, (uint8_t*)pBuf, u8Length) !=  0)
+    if(pHandle->i2c_write(pHandle->rtc_address, u8Reg, (uint8_t*)pBuf, 1) !=  0)
     {
         return 1;                                      /**< return an error if failed to execute */
     }
@@ -139,6 +140,29 @@ void a_mcp794xx_print_error_msg(mcp794xx_handle_t *const pHandle, char *const pB
 }
 
 /**
+ * @brief decimal to BCD
+ * @param[in] u8Decimal is the decimal value to be converted
+ * @return BCD data
+ * @note    none
+ */
+uint8_t a_pcf85xxx_dec2bcd(uint8_t u8Decimal)
+{
+    return (((u8Decimal / 10) << 4) | (u8Decimal % 10));
+}
+
+/**
+ * @brief BCD to decimal
+ * @param[in] u8Bcd is the BCD value to be converted
+ * @return decimal data
+ * @note     none
+ */
+uint8_t a_pcf85xxx_bcd2dec(uint8_t u8Bcd)
+{
+    return (((u8Bcd >> 4)*10) + (u8Bcd & 0xF));
+}
+
+
+/**
  * @brief     This function initialize the chip
  * @param[in] pHandle points to mcp794xx pHandle structure
  * @return  status code
@@ -150,7 +174,62 @@ void a_mcp794xx_print_error_msg(mcp794xx_handle_t *const pHandle, char *const pB
  */
 uint8_t mcp794xx_init(mcp794xx_handle_t *const pHandle)
 {
+    if (pHandle == NULL)
+        return 2;
+    if (pHandle->debug_print == NULL)
+        return 3;
+    if (pHandle->i2c_init == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: i2c initialize is null\n");
+#endif
+        return 3;
+    }
+    if (pHandle->i2c_deinit == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: i2c_deint is null\n");
+#endif
+        return 3;
+    }
+    if (pHandle->i2c_read == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: i2c_read is null\n");
+#endif
+        return 3;
+    }
+    if (pHandle->i2c_write == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: i2c_write is null\n");
+#endif
+        return 3;
+    }
+    if (pHandle->receive_callback == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: receive_callback\n");
+#endif
+        return 3;
+    }
+    if (pHandle->delay_ms == NULL)
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: delay_ms\n");
+#endif
+    }
+    if (pHandle->i2c_init())
+    {
+#ifdef MCP794XX_DEBUG_MODE
+        pHandle->debug_print("mcp794xx: i2c initialize failed\n");
+#endif
+        return 1;
+    }
 
+    pHandle->inited = 1; /* flag finish initialization */
+
+    return 0;
 }
 
 /**
@@ -170,8 +249,9 @@ uint8_t mcp794xx_deinit(mcp794xx_handle_t *const pHandle)
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    if(pHandle->i2c_deinit() != 0)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "de-initialize i2c");
         return 1;           /**< failed error */
     }
 
@@ -195,7 +275,8 @@ uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle)
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -216,14 +297,16 @@ uint8_t mcp794xx_irq_pHandler(mcp794xx_handle_t *const pHandle)
 uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_addr_t *pI2c_address)
 {
 
-
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    pHandle->rtc_address = MCP794XX_RTC_IIC_ADDRESS;
+    pHandle->eeprom_address = MCP794XX_EEPROM_IIC_ADDRESS;
+    if((pHandle->rtc_address != MCP794XX_RTC_IIC_ADDRESS) || (pHandle->eeprom_address != MCP794XX_EEPROM_IIC_ADDRESS))
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set i2c slave address");
         return 1;           /**< failed error */
     }
 
@@ -243,15 +326,15 @@ uint8_t mcp794xx_set_addr_pin(mcp794xx_handle_t *const pHandle, mcp794xx_i2c_add
  */
 uint8_t mcp794xx_set_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_t variant)
 {
-
-
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-    if(err){
-
+    pHandle->device_variant = variant;
+    if(pHandle->device_variant != variant)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set variant");
         return 1;           /**< failed error */
     }
 
@@ -271,15 +354,15 @@ uint8_t mcp794xx_set_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
  */
 uint8_t mcp794xx_get_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_t *pVariant)
 {
-
-
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    *pVariant = pHandle->device_variant;
+    if( *pVariant != pHandle->device_variant)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "get variant");
         return 1;           /**< failed error */
     }
 
@@ -301,15 +384,179 @@ uint8_t mcp794xx_get_variant(mcp794xx_handle_t *const pHandle, mcp794xx_variant_
 uint8_t mcp794xx_set_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTime)
 {
 
+    uint8_t ptimeBuffer[MCP794XX_TIME_BUFFER_SIZE];
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(pTime->time_Format == MCP794XX_24HR_FORMAT)
+    {
+        if((pTime->year < 0) || (pTime->year > 99))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, year can not be less than 0 or greater than 99");
+            return 4;
+        }
 
-        return 1;           /**< failed error */
+        if((pTime->month < 0) || (pTime->month > 12))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, month can not be less than 0 or greater than 12");
+            return 4;
+        }
+
+        if((pTime->date < 0) || (pTime->date > 31))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, date can not be less than 0 or greater than 31");
+            return 4;
+        }
+
+        if((pTime->weekDay < 0) || (pTime->weekDay > 6))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, week day can not be less than 0 or greater than 6");
+            return 4;
+        }
+
+        if((pTime->hour < 0) || (pTime->hour > 23))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, hour can not be less than 0 or greater than 23");
+            return 4;
+        }
+
+        if((pTime->minute < 0) || (pTime->minute > 59))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, minute can not be less than 0 or greater than 59");
+            return 4;
+        }
+
+        if((pTime->second < 0) || (pTime->second > 59))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, seconds can not be less than 0 or greater than 59");
+            return 4;
+        }
+
+
+    }
+
+    else if(pTime->time_Format == MCP794XX_12HR_FORMAT)
+    {
+        if((pTime->year < 0) || (pTime->year > 99))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, year can not be less than 0 or greater than 99");
+            return 4;
+        }
+
+        if((pTime->month < 0) || (pTime->month > 12))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, month can not be less than 0 or greater than 12");
+            return 4;
+        }
+
+        if((pTime->date < 0) || (pTime->date > 31))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, date can not be less than 0 or greater than 31");
+            return 4;
+        }
+
+        if((pTime->weekDay < 0) || (pTime->weekDay > 6))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, week day can not be less than 0 or greater than 6");
+            return 4;
+        }
+
+        if((pTime->hour < 0) || (pTime->hour > 12))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, hour can not be less than 0 or greater than 23");
+            return 4;
+        }
+
+        if((pTime->minute < 0) || (pTime->minute > 59))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, minute can not be less than 0 or greater than 59");
+            return 4;
+        }
+
+        if((pTime->second < 0) || (pTime->second > 59))
+        {
+            a_mcp794xx_print_error_msg(pHandle, "set time, seconds can not be less than 0 or greater than 59");
+            return 4;
+        }
+
+    }
+
+    else
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set time, invalid time format");
+        return 4;
+    }
+
+    memset(ptimeBuffer, 0, sizeof(ptimeBuffer));
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_SECOND_REG, (uint8_t *)ptimeBuffer, MCP794XX_TIME_BUFFER_SIZE);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read time before write");
+        return 1;
+    }
+    err =  rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_SECOND_REG, a_pcf85xxx_dec2bcd(pTime->second) | (a_pcf85xxx_bcd2dec(ptimeBuffer[0] & MCP794XX_ST_MASK)));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write seconds");
+        return 1;
+    }
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_MINUTE_REG, a_pcf85xxx_dec2bcd(pTime->minute));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write minutes");
+        return 1;
+    }
+
+    if(pTime->time_Format == MCP794XX_24HR_FORMAT)
+    {
+        err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_HOUR_REG, a_pcf85xxx_dec2bcd(pTime->hour) | (a_pcf85xxx_bcd2dec(ptimeBuffer[1] & MCP794XX_12HR_24HR_FRMT_STAT_MASK)));
+        if(err)
+        {
+            a_mcp794xx_print_error_msg(pHandle, "to write hours");
+            return 1;
+        }
+    }
+
+    else if(pTime->time_Format == MCP794XX_12HR_FORMAT)
+    {
+        err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_HOUR_REG, a_pcf85xxx_dec2bcd(pTime->hour) | (a_pcf85xxx_bcd2dec(ptimeBuffer[2] & (MCP794XX_12HR_24HR_FRMT_STAT_MASK | MCP794XX_TIME_AM_PM_MASK))));
+        if(err)
+        {
+            a_mcp794xx_print_error_msg(pHandle, "to write hours");
+            return 1;
+        }
+    }
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_WKDAY_REG, a_pcf85xxx_dec2bcd(pTime->weekDay) | (a_pcf85xxx_bcd2dec(ptimeBuffer[3] & (MCP794XX_OSC_RUN_STATUS_MASK | MCP794XX_PWR_FAIL_STATUS_MASK | MCP794XX_VBAT_EN_MASK))));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write week day");
+        return 1;
+    }
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_DATE_REG, a_pcf85xxx_dec2bcd(pTime->date));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write date");
+        return 1;
+    }
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_MONTH_REG, a_pcf85xxx_dec2bcd(pTime->month) | (a_pcf85xxx_bcd2dec(ptimeBuffer[5] & MCP794XX_LEAP_YEAR_STATUS_MASK)));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write month");
+        return 1;
+    }
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_MONTH_REG, a_pcf85xxx_dec2bcd(pTime->year));
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "to write year");
+        return 1;
     }
 
     return 0;           /**< success */
@@ -328,17 +575,35 @@ uint8_t mcp794xx_set_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
  */
 uint8_t mcp794xx_get_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTime)
 {
-
+    uint8_t timeBuffer[MCP794XX_TIME_BUFFER_SIZE];
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_SECOND_REG, (uint8_t *)timeBuffer, MCP794XX_TIME_BUFFER_SIZE);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read time and date");
         return 1;           /**< failed error */
     }
+
+    pTime->second = a_pcf85xxx_bcd2dec(timeBuffer[0] & MCP794XX_SEC_BCD_MASK);
+    pTime->minute = a_pcf85xxx_bcd2dec(timeBuffer[1] & MCP794XX_MIN_BCD_MASK);
+    if(pTime->time_Format == MCP794XX_24HR_FORMAT)
+    {
+        pTime->hour = a_pcf85xxx_bcd2dec(timeBuffer[2] & MCP794XX_24HR_FRMT_BCD_MASK);
+    }
+    else if(pTime->time_Format == MCP794XX_12HR_FORMAT)
+    {
+        pTime->hour = a_pcf85xxx_bcd2dec(timeBuffer[2] & MCP794XX_12HR_FRMT_BCD_MASK);
+        pTime->am_pm_indicator = ((timeBuffer[2] & MCP794XX_TIME_AM_PM_MASK) >> 5) ;
+    }
+    pTime->weekDay = a_pcf85xxx_bcd2dec(timeBuffer[3] & MCP794XX_WKDAY_BCD_MASK);
+    pTime->date = a_pcf85xxx_bcd2dec(timeBuffer[4] & MCP794XX_DATE_BCD_MASK);
+    pTime->month = a_pcf85xxx_bcd2dec(timeBuffer[5] & MCP794XX_MONTH_BCD_MASK);
+    pTime->year = a_pcf85xxx_bcd2dec(timeBuffer[6] & MCP794XX_YEAR_BCD_MASK) + 2000;
 
     return 0;           /**< success */
 }
@@ -354,15 +619,27 @@ uint8_t mcp794xx_get_time(mcp794xx_handle_t *const pHandle, mcp794xx_time_t *pTi
  */
 uint8_t mcp794xx_set_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour_format_t format)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t*)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read hour format before write");
+        return 1;           /**< failed error */
+    }
 
+    read_status &= ~(1 << 6);            /*< clear hour format status bit */
+    read_status |= (format << 6);        /*< write hour format status bit */
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t*)&read_status);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set hour format ");
         return 1;           /**< failed error */
     }
 
@@ -380,17 +657,21 @@ uint8_t mcp794xx_set_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
  */
 uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour_format_t *pFormat)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t *)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "get hour format");
         return 1;           /**< failed error */
     }
+
+    *pFormat = (mcp794xx_hour_format_t)((read_status & MCP794XX_ALARMx_12HR_24HR_FRMT_STAT_MASK) >> 6);
 
     return 0;              /**< success */
 }
@@ -407,15 +688,27 @@ uint8_t mcp794xx_get_hour_format(mcp794xx_handle_t *const pHandle, mcp794xx_hour
  */
 uint8_t mcp794xx_set_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t am_pm)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t *)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read time am/pm indicator before write");
+        return 1;           /**< failed error */
+    }
 
+    read_status &= ~(1 << 5);
+    read_status |= (am_pm << 5);
+
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t *)&read_status);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set time am/pm indicator");
         return 1;           /**< failed error */
     }
 
@@ -434,17 +727,21 @@ uint8_t mcp794xx_set_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indi
  */
 uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indicator_t *pAm_pm)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_HOUR_REG, (uint8_t *)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read time am/pm indicator");
         return 1;           /**< failed error */
     }
+
+    *pAm_pm = (mcp794xx_am_pm_indicator_t)((read_status & MCP794XX_ALARMx_AM_PM_MASK) >> 5);
 
     return 0;              /**< success */
 }
@@ -461,15 +758,26 @@ uint8_t mcp794xx_get_am_pm(mcp794xx_handle_t *const pHandle, mcp794xx_am_pm_indi
  */
 uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t status)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_SECOND_REG, (uint8_t *)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "read oscillator status before write");
+        return 1;           /**< failed error */
+    }
+    read_status &= ~(1 << 7);
+    read_status |= (status << 7);
 
+    err = rtc_mcp794xx_i2c_write(pHandle, MCP794XX_RTC_SECOND_REG, (uint8_t*)&read_status);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "set oscillator status");
         return 1;           /**< failed error */
     }
 
@@ -488,17 +796,21 @@ uint8_t mcp794xx_set_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_s
  */
 uint8_t mcp794xx_get_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx_osc_status_t *pStatus)
 {
-
+    uint8_t read_status;
 
     if(pHandle == NULL)
         return 2;     /**< return failed error */
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
-
+    err = rtc_mcp794xx_i2c_read(pHandle, MCP794XX_RTC_SECOND_REG, (uint8_t *)&read_status, 1);
+    if(err)
+    {
+        a_mcp794xx_print_error_msg(pHandle, "get oscillator status");
         return 1;           /**< failed error */
     }
+
+    *pStatus = (mcp794xx_osc_status_t)((read_status & MCP794XX_ST_MASK) >> 7);
 
     return 0;              /**< success */
 }
@@ -522,7 +834,8 @@ uint8_t mcp794xx_clr_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -549,7 +862,8 @@ uint8_t mcp794xx_get_pwr_fail_status(mcp794xx_handle_t *const pHandle, mcp794xx_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -577,7 +891,8 @@ uint8_t mcp794xx_get_pwr_fail_time_stamp(mcp794xx_handle_t *const pHandle, mcp79
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -604,7 +919,8 @@ uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -612,16 +928,16 @@ uint8_t mcp794xx_get_leap_year_status(mcp794xx_handle_t *const pHandle, mcp794xx
     return 0;              /**< success */
 }
 
- /**
- * @brief This function set the alarm enable status bit
- * @param[in] pHandle points to a mcp794xx handle structure
- * @param[in] status is the enable boolean status to be set
- * @return status code
- *          - 0 success
- *          - 1 failed
-            - 2 handle null
- *          - 3 handle is not initialized
- */
+/**
+* @brief This function set the alarm enable status bit
+* @param[in] pHandle points to a mcp794xx handle structure
+* @param[in] status is the enable boolean status to be set
+* @return status code
+*          - 0 success
+*          - 1 failed
+           - 2 handle null
+*          - 3 handle is not initialized
+*/
 uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t status)
 {
 
@@ -631,7 +947,8 @@ uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp79
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -639,16 +956,16 @@ uint8_t mcp794xx_set_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp79
     return 0;              /**< success */
 }
 
- /**
- * @brief This function set the alarm enable status bit
- * @param[in] pHandle points to a mcp794xx handle structure
- * @param[out] pStatus point to the enable boolean status set
- * @return status code
- *          - 0 success
- *          - 1 failed
-            - 2 handle null
- *          - 3 handle is not initialized
- */
+/**
+* @brief This function set the alarm enable status bit
+* @param[in] pHandle points to a mcp794xx handle structure
+* @param[out] pStatus point to the enable boolean status set
+* @return status code
+*          - 0 success
+*          - 1 failed
+           - 2 handle null
+*          - 3 handle is not initialized
+*/
 uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp794xx_bool_t *pStatus)
 {
 
@@ -658,7 +975,8 @@ uint8_t mcp794xx_get_alarm_enable_status(mcp794xx_handle_t *const pHandle, mcp79
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -685,7 +1003,8 @@ uint8_t mcp794xx_set_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle,
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -712,7 +1031,8 @@ uint8_t mcp794xx_get_alarm_int_output_polarity(mcp794xx_handle_t *const pHandle,
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -741,7 +1061,8 @@ uint8_t mcp794xx_set_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t al
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -771,7 +1092,8 @@ uint8_t mcp794xx_get_alarm(mcp794xx_handle_t *const pHandle, mcp794xx_alarm_t al
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -799,7 +1121,8 @@ uint8_t mcp794xx_get_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp7
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -826,7 +1149,8 @@ uint8_t mcp794xx_clr_alarm_interrupt_flag(mcp794xx_handle_t *const pHandle, mcp7
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -853,7 +1177,8 @@ uint8_t mcp794xx_set_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -880,7 +1205,8 @@ uint8_t mcp794xx_get_mfp_logic_level(mcp794xx_handle_t *const pHandle, mcp794xx_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -907,7 +1233,8 @@ uint8_t mcp94xx_set_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -934,7 +1261,8 @@ uint8_t mcp94xx_get_sqr_wave_freq(mcp794xx_handle_t *const pHandle, mcp94xx_sqr_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -961,7 +1289,8 @@ uint8_t mcp794xx_set_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mc
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -988,7 +1317,8 @@ uint8_t mcp794xx_get_sqr_wave_enable_status(mcp794xx_handle_t *const pHandle, mc
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1016,7 +1346,8 @@ uint8_t mcp794xx_set_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_si
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1044,7 +1375,8 @@ uint8_t mcp794xx_get_trim_val(mcp794xx_handle_t *const pHandle, mcp794xx_trim_si
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1071,7 +1403,8 @@ uint8_t mcp794xx_set_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, m
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1098,7 +1431,8 @@ uint8_t mcp794xx_get_coarse_trim_mode_status(mcp794xx_handle_t *const pHandle, m
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1125,7 +1459,8 @@ uint8_t mcp794xx_set_start_osc_status(mcp794xx_handle_t *const pHandle, mcp794xx
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1152,7 +1487,8 @@ uint8_t mcp794xx_get_start_os_status(mcp794xx_handle_t *const pHandle, mcp794xx_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1179,7 +1515,8 @@ uint8_t  mcp794xx_set_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, m
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1206,7 +1543,8 @@ uint8_t  mcp794xx_get_ext_batt_enable_status(mcp794xx_handle_t *const pHandle, m
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1233,7 +1571,8 @@ uint8_t mcp794xx_set_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1260,7 +1599,8 @@ uint8_t mcp794xx_get_ext_osc_enable_status(mcp794xx_handle_t *const pHandle, mcp
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1288,7 +1628,8 @@ uint8_t mcp794xx_get_serial_number(mcp794xx_handle_t *const pHandle, uint32_t *p
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1321,7 +1662,8 @@ uint8_t mcp794xx_eeprom_write_byte(mcp794xx_handle_t *const pHandle, uint16_t u1
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1352,7 +1694,8 @@ uint8_t mcp794xx_eeprom_read_byte(mcp794xx_handle_t *const pHandle, uint16_t u16
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1384,7 +1727,8 @@ uint8_t mcp794xx_eeprom_put_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1414,7 +1758,8 @@ uint8_t mcp794xx_eeprom_get_byte(mcp794xx_handle_t *const pHandle, uint8_t u8Add
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1442,7 +1787,8 @@ uint8_t mcp794xx_eeprom_erase_page(mcp794xx_handle_t *const pHandle, uint8_t u8P
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1469,7 +1815,8 @@ uint8_t mcp794xx_eeprom_erase_sector(mcp794xx_handle_t *const pHandle, uint8_t *
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1494,7 +1841,8 @@ uint8_t mcp794xx_eeprom_erase_chip(mcp794xx_handle_t *const pHandle)
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1522,7 +1870,8 @@ uint8_t mcp794xx_eeprom_set_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1549,7 +1898,8 @@ uint8_t mcp794xx_eeprom_get_bp_status(mcp794xx_handle_t *const pHandle, mcp794xx
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1573,7 +1923,8 @@ uint8_t mcp794xx_eeprom_check_bp_before_write(mcp794xx_handle_t *const pHandle, 
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1599,7 +1950,8 @@ uint8_t mcp794xxx_eeprom_validate_address(mcp794xx_handle_t *const pHandle)
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1627,7 +1979,8 @@ uint8_t mcp794xx_eeprom_validate_page_boundary(mcp794xx_handle_t *const pHandle,
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1655,7 +2008,8 @@ uint8_t mcp794xxx_eeprom_validate_page(mcp794xx_handle_t *const pHandle, uint8_t
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1683,7 +2037,8 @@ uint8_t mcp794xx_eeprom_get_legth(mcp794xx_handle_t *const pHandle)
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1712,7 +2067,8 @@ uint8_t mcp794xx_set_reg(mcp794xx_handle_t *const pHandle, uint8_t u8Reg, uint8_
     if(pHandle->inited != 1)
         return 3;      /**< return failed error */
 
-   if(err){
+    if(err)
+    {
 
         return 1;           /**< failed error */
     }
@@ -1773,6 +2129,8 @@ uint8_t mcp794xx_info(mcp794xx_info_t *const pInfo)
     pInfo->max_current_ma = MAX_CURRENT;                             /**< set maximum current */
     pInfo->temperature_max = TEMPERATURE_MAX;                        /**< set minimal temperature */
     pInfo->temperature_min = TEMPERATURE_MIN;                        /**< set maximum temperature */
+    pInfo->flash_size_min = MCU_FLASH_MIN;                           /**< set the Micro-controller minimum recommended flash size */
+    pInfo->ram_size_min = MCU_RAM_MIN;                               /**< set the Micro-controller minimum recommended ram size */
     pInfo->driver_version = DRIVER_VERSION;                          /**< set driver version */
 
     return 0;

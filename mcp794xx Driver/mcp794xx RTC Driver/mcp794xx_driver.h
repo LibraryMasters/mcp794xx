@@ -38,7 +38,8 @@
 #include <stdarg.h>
 #include <math.h>
 
-#define MCP794XX_DEBUG_MODE              /**< enables/disabled all printout on the code*/
+#define MCP794XX_DEBUG_MODE                 /**< Enabling this line adds up an extra to 20 kB of flash and 1.6 kB of RAM to driver size */
+                                            /**< Debug mode enables driver serial print out (comment out if not used) */
 /**
 * @defgroup driver_mcp794xx mcp794xx driver function
 * @brief mcp794xx driver modules
@@ -133,7 +134,7 @@
 #define MCP794XX_PWRXX_WKDAY_BCD_MASK                0xE0                           /**< Power down/up BCD value week day mask */
 #define MCP794XX_PWRXX_MONTH_BCD_MASK                0x1F                           /**< Power down/up BCD value month mask */
 
-#define PCF8523_TIME_BUFFER_SIZE    7                                               /**< Time buffer size */
+#define MCP794XX_TIME_BUFFER_SIZE    7                                               /**< Time buffer size */
 
 
 /** EEPROM Definitions **/
@@ -141,7 +142,7 @@
 #define EEPROM_HIGHEST_ADDRESS     127                                              /**< eeprom highest address allowed */
 #define EEPROM_UID_ADDRESS         0xF0                                             /**< eeprom unique ID address */
 
-static uint8_t err;
+static uint8_t err;                                                                 /**< driver error status read variable */
 
 /**
 * @brief execution status enumeration
@@ -357,7 +358,7 @@ typedef struct mcp794xx_handle_s
     void(*debug_print)(char *fmt, ...);                                                         /**< point to a debug_print function address */
     void (*receive_callback)(uint8_t u8Flag, uint8_t u8Status);                                 /**< point to a receive callback function address */
     uint8_t rtc_address;                                                                        /**< rtc device address */
-    uint8_t eeprom_address;                                                                        /**< eeprom device address */
+    uint8_t eeprom_address;                                                                     /**< eeprom device address */
     uint8_t device_variant;                                                                     /**< Device variant */
     uint8_t inited;                                                                             /**< Driver initialize status bit */
 } mcp794xx_handle_t;
@@ -375,6 +376,8 @@ typedef struct mcp794xx_info_s
     float max_current_ma;                                               /**< chip max current */
     float temperature_min;                                              /**< chip min operating temperature */
     float temperature_max;                                              /**< chip max operating temperature */
+    uint8_t flash_size_min;                                             /**< Micro-controller minimum recommended flash size */
+    uint8_t ram_size_min;                                               /**< Micro-controller minimum recommended flash size */
     float driver_version;                                               /**< driver version */
 } mcp794xx_info_t;
 

@@ -162,7 +162,7 @@ void mcp794xx_interface_debug_print(const char *const fmt, ...)
 
     len = strlen((char *) str);
     //   EUSART1_Write_Text((const char *) str, len);        /**< example of a usart function */
-//      (void)printf((uint8_t *)str, len);                     /**< example of printf function, comment out if used */
+      (void)printf((uint8_t *)str, len);                     /**< example of printf function, comment out if used */
 
     /*user code end*/
 #endif

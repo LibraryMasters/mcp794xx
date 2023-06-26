@@ -28,14 +28,13 @@
 1683377030 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp749xx rtc driver\mcp749xx_driver_interface.c
 	"mcp749xx_driver_interface.h"
 
-1584205420 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\main.c
-	<stdio.h>
-	<stdlib.h>
+1686068034 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\main.c
+	"mcp794xx_driver_basic.h"
 
-1685354066 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.c
+1686128142 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.c
 	"mcp794xx_driver.h"
 
-1685353886 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.h
+1686128975 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -54,7 +53,7 @@
 1683463549 e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_interface.h
 	"mcp794xx_driver.h"
 
-1683530585 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_interface.c
+1685355384 source:e:\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\mcp794xx_driver_interface.c
 	"mcp794xx_driver_interface.h"
 
 1584205420 source:c:\users\cedric\documents\mega\library master\mcp794xx external rtc\mcp794xx driver\mcp794xx rtc driver\main.c
