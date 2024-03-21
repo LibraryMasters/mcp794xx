@@ -114,6 +114,8 @@ struct mcp794xx_time_s alarm_default_time = {           /**< alarm default time 
 };
 
 mcp794xx_time_t now, alarm, pwr_fail, local, gmt, compile_time_date;            /**< define a new time objects to read current time and date, alarm time and date and power fail time stamp */
+
+/**< Global varibale definitions */
 uint8_t alarm_mask, previous_seconds;
 uint8_t alarm_flag, set_time_status;
 bool pwr_fail_read, set_alarm_status;
