@@ -1,0 +1,1 @@
+ -c -mcpu=$(MP_PROCESSOR_OPTION)      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -Os -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"E:\Library Master\mcp794xx External RTC\Project Example\PIC24FJ128GA705\mcp794xx_rtc_pic24.X\mcp794xx_driver\mcp794xx_driver_interface.c

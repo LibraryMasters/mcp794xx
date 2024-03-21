@@ -27,7 +27,7 @@
 
  #include "mcp794xx_driver_interface.h"
 
- /**
+/**
 * @brief  interface i2c bus init
 * @return status code
 *         - 0 success
@@ -61,7 +61,6 @@ uint8_t mcp794xx_interface_i2c_deinit(void)
 /**
  * @brief      interface i2c bus read
  * @param[in]  u8Addr is the i2c device address 7 bit
- * @param[in]  u16Reg is the i2c register address
  * @param[out] *pBuf points to a data buffer
  * @param[in]  u8length is the length of the data buffer
  * @return     status code
@@ -69,7 +68,7 @@ uint8_t mcp794xx_interface_i2c_deinit(void)
  *             - 1 read failed
  * @note       none
  */
-uint8_t mcp794xx_interface_i2c_read(uint8_t u8Addr, uint16_t u16Reg, uint8_t *pBuf, uint8_t u8Length)
+uint8_t mcp794xx_interface_i2c_read(uint8_t u8Addr, uint8_t *pBuf, uint8_t u8Length)
 {
     /*call your i2c read function here*/
     /*user code begin */
@@ -81,7 +80,6 @@ uint8_t mcp794xx_interface_i2c_read(uint8_t u8Addr, uint16_t u16Reg, uint8_t *pB
 /**
  * @brief     interface i2c bus write
  * @param[in] u8Addr is the i2c device address 7 bit
- * @param[in] u16Reg is the i2c register address
  * @param[in] *pBuf points to a data buffer
  * @param[in] u8length is the length of the data buffer
  * @return    status code
@@ -89,7 +87,7 @@ uint8_t mcp794xx_interface_i2c_read(uint8_t u8Addr, uint16_t u16Reg, uint8_t *pB
  *            - 1 write failed
  * @note      none
  */
-uint8_t mcp794xx_interface_i2c_write(uint8_t u8Addr, uint16_t u16Reg, uint8_t *pBuf, uint8_t u8Length)
+uint8_t mcp794xx_interface_i2c_write(uint8_t u8Addr, uint8_t *pBuf, uint8_t u8Length)
 {
     /*call your i2c write function here*/
     /*user code begin */
@@ -151,18 +149,17 @@ void mcp794xx_interface_debug_print(const char *const fmt, ...)
     /*call your call print function here*/
     /*user code begin */
 #ifdef MCP794XX_DEBUG_MODE
-    volatile char str[256];
+    volatile char str[MCP794XX_DEBUG_PRINT_BUFFER_SIZE_128B];
     volatile uint8_t len;
     va_list args;
 
-    memset((char *) str, 0, sizeof (char)*256);
+    memset((char *) str, 0, sizeof (char) * MCP794XX_DEBUG_PRINT_BUFFER_SIZE_128B);
     va_start(args, fmt);
-    vsnprintf((char *) str, 256, (char const *) fmt, args);
+    vsnprintf((char *) str, MCP794XX_DEBUG_PRINT_BUFFER_SIZE_128B, (char const *) fmt, args);
     va_end(args);
 
     len = strlen((char *) str);
-    //   EUSART1_Write_Text((const char *) str, len);        /**< example of a usart function */
-      (void)printf((uint8_t *)str, len);                     /**< example of printf function, comment out if used */
+    (void)printf((uint8_t *)str, len);                     /**< example of printf function, comment out if used */
 
     /*user code end*/
 #endif
@@ -171,13 +168,39 @@ void mcp794xx_interface_debug_print(const char *const fmt, ...)
 /**
  * @brief     interface interrupt request callback
  * @param[in] u8Type is the interrupt type
- * @param[in] u8Status is the status bit value
  * @note      Do not use delay function or blocking code in here, such code could crush your code.
  */
-void mcp794xx_interface_irq_callback(uint8_t u8Type, uint8_t u8Status)
+void mcp794xx_interface_irq_callback(mcp794xx_alarm_t u8Type)
 {
     /*call your delay function here*/
     /*user code begin */
+
+    switch(u8Type)
+    {
+        case MCP794XX_ALARM0:
+        {
+          /* It's highly recommended to keep your code as short as possible in an interrupt callback function */
+          /*user code begin */
+
+         /*user code end*/
+         break;
+        }
+
+
+        case MCP794XX_ALARM1:
+        {
+          /* It's highly recommended to keep your code as short as possible in an interrupt callback function */
+          /*user code begin */
+
+         /*user code end*/
+         break;
+        }
+
+        default:
+
+        break;
+
+    }
 
     /*user code end*/
 

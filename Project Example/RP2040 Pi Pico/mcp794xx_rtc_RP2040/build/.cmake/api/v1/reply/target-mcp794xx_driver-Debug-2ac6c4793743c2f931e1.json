@@ -1,0 +1,137 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "mcp794xx_driver/libmcp794xx_driver.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"mcp794xx_driver/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-mcpu=cortex-m0plus -mthumb -Og -g"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 2,
+					"path" : "E:/Library Master/mcp794xx External RTC/Project Example/RP2040 Pi Pico/mcp794xx_rtc_RP2040/mcp794xx_driver/src"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"id" : "mcp794xx_driver::@c1e722980dca6baea2e1",
+	"name" : "mcp794xx_driver",
+	"nameOnDisk" : "libmcp794xx_driver.a",
+	"paths" : 
+	{
+		"build" : "mcp794xx_driver",
+		"source" : "mcp794xx_driver"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				0,
+				4,
+				5,
+				6
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"path" : "mcp794xx_driver/src/compile_time_date.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver_basic.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver_interface.c",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver_basic.h",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "mcp794xx_driver/src/mcp794xx_driver_interface.h",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

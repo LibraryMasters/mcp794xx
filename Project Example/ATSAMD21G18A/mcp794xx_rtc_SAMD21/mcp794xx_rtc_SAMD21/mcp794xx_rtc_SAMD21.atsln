@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "mcp794xx_rtc_avr4808", "..\..\..\ATMEGA4808\mcp794xx_rtc_avr4808\mcp794xx_rtc_avr4808.cproj", "{3198791F-CCF3-4377-9E15-A1D195CE5BB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|AVR = Debug|AVR
+		Release|ARM = Release|ARM
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Debug|ARM.ActiveCfg = Debug|AVR
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Debug|AVR.ActiveCfg = Debug|AVR
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Debug|AVR.Build.0 = Debug|AVR
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Release|ARM.ActiveCfg = Release|AVR
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Release|AVR.ActiveCfg = Release|AVR
+		{3198791F-CCF3-4377-9E15-A1D195CE5BB6}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

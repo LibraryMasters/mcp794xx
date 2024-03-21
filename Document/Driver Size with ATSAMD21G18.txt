@@ -1,0 +1,19 @@
+Blank project
+------------------------
+Program Memory Usage 	:	4764 bytes   1,8 % Full
+Data Memory Usage 	:	8324 bytes   25,4 % Full
+
+Project with mcp794xx driver with optimization
+----------------------------------------------
+Program Memory Usage 	:	19356 bytes   7,4 % Full
+Data Memory Usage 	:	8880 bytes   27,1 % Full
+
+Project with mcp794xx driver with no optimization
+-------------------------------------------------
+Program Memory Usage 	:	44952 bytes   17,1 % Full
+Data Memory Usage 	:	11336 bytes   34,6 % Full
+
+Driver Size with optimization:
+------------------------------
+RAM: 556 Bytes
+FLASH: 14.26KB

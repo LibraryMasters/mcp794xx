@@ -1,0 +1,9 @@
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:37:9:mcp794xx_interface_i2c_init	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:52:9:mcp794xx_interface_i2c_deinit	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:71:9:mcp794xx_interface_i2c_read	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:93:9:mcp794xx_interface_i2c_write	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:112:9:mcp794xx_interface_gpio_write	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:127:9:mcp794xx_interface_gpio_read	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:140:6:mcp794xx_interface_delay_ms	0	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:153:6:mcp794xx_interface_debug_print	152	static
+../Core/mcp794xx_driver/mcp794xx_driver_interface.c:179:6:mcp794xx_interface_irq_callback	0	static
