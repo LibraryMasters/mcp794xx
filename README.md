@@ -62,7 +62,7 @@ typedef enum{                   /**< driver test state chine */
 	READ_TIME_AND_DATE,
 	GET_COMPILE_TIME_DATE,
 	TEST_ALARM,
-  COUNTDOWN_TIMER,
+        COUNTDOWN_TIMER,
 	TEST_POWER_FAIL,
 	TEST_FREQ_OUT,
 	TEST_TIME_TRIM,
@@ -71,7 +71,7 @@ typedef enum{                   /**< driver test state chine */
 	READ_SRAM,
 	ERASE_SRAM_SECTOR,
 	WIPE_SRAM,
-  WRITE_EEPROM,
+        WRITE_EEPROM,
 	READ_EEPROM,
 	PUT_EEPROM,
 	GET_EEPROM,
@@ -216,7 +216,6 @@ int main()
 
 			   if(alarm_flag == 1)    																						/**< this routine should be executed inside the external interrupt callback function */
 			   {
-//				   HAL_GPIO_TogglePin(user_led_GPIO_Port, user_led_Pin);													/**< toggle user led for debug purposes */
 				   mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM0);												/**< clear alarm time flag (note that if time still match alarm flag will be held */
 
 //				   mcp794xx_basic_irq_callBack(MCP794XX_ALARM0, mcp794x_irq_cb);											/**< interrupt callback function (to be called in the external interrupt callback function )*/
@@ -240,9 +239,8 @@ int main()
 
 				if(alarm_flag == 1)
 				{
-//					HAL_GPIO_TogglePin(user_led_GPIO_Port, user_led_Pin);					/**< toggle user led for debug purposes  (not advisable to call this function within a interrupt callback function) */
 					mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM1);				/**< clear interrupt flag */
-					mcp794xx_basic_set_countdown_time(5, MCP794XX_CNTDWN_SECONDS);			/**< reload time in register every when count down expires  (not advisable to call this function within a interrupt callback function)*/
+					mcp794xx_basic_set_countdown_time(5, MCP794XX_CNTDWN_SECONDS);			/**< reload time in register every when count down expires  (not advisable to call this function within an interrupt callback function)*/
 
 //					mcp794xx_basic_irq_callBack(MCP794XX_ALARM1, mcp794x_irq_cb);			/**< interrupt callback function (to be called in the external interrupt callback function) */
 				}
@@ -252,11 +250,11 @@ int main()
 
 			case TEST_POWER_FAIL:
 			{
-				if(pwr_fail_read == false)   /**< !! make sure power fail time stamp is read before any other instruction clears existing data (must be called before setting time at start up !! */
+				if(pwr_fail_read == false)   /**< !! make sure power fail time stamp is read before any other instruction clears existing data (must be called before setting time at start-up !! */
 				{
 					pwr_fail_read = true;
 					mcp794xx_basic_get_pwr_fail_time_stamp(MCP794XX_PWR_UP_TIME_STAMP, &pwr_fail);           /**< read power fail time stamp */
-					mcp794xx_basic_enable_ext_batt_bckup_pwr();											     /**< enable back up power for future power fail event (calling this function will clear power fail time stamp event) */
+					mcp794xx_basic_enable_ext_batt_bckup_pwr();											     /**< enable backup power for future power fail event (calling this function will clear power fail time stamp event) */
 				}
 				/*< print time stamp */
 				mcp794xx_interface_debug_print("pwr fail:%.2d:",pwr_fail.hour);
@@ -462,7 +460,7 @@ uint8_t mcp794xx_interface_i2c_write(uint8_t u8Addr, uint8_t *pBuf, uint8_t u8Le
   [datasheet](https://github.com/LibraryMasters/sht4x/blob/master/Document/Datasheet_SHT4x%20temperature%20sensor.pdf)
   
   ### Contribute
-   1. Clone repo and create a new branch: ```https://github.com/LibraryMasters/sht4x_PR.git```
+   1. Clone repo and create a new branch: ```https://github.com/LibraryMasters/mcp794xx_PR.git```
    2. Make changes and test
    3. Submit a Pull Request with a comprehensive description of changes
   ### License
