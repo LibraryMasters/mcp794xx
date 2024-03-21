@@ -90,16 +90,16 @@ uint8_t i2c_write(uint8_t addr, uint8_t *buf, uint16_t len);
 uint8_t i2c_read(uint8_t addr, uint8_t *buf, uint16_t len);
 
 struct mcp794xx_time_s default_time_date = {   	        /**< default time and date Tuesday 24/12/2023 20:24:48*/
-	.year    = 23,          		/**< year 2023*/
-	.date    = 24,         	 		/**< date 24th */
+	.year    = 23,				/**< year 2023*/
+	.date    = 24,				/**< date 24th */
 	.hour    = 20,				/**< hour 8pm */
 	.minute  = 24,				/**< minute 24 */
-	.second  = 48,           		/**< seconds 48 */
+	.second  = 48,				/**< seconds 48 */
 	.month   = MCP794XX_MTH_DECEMBER,		/**< month of December */
-	.time_Format = MCP794XX_24HR_FORMAT,            /**< 24hr time format */
-	.weekDay = MCP794XX_WKDAY_SUNDAY,               /**< week day Sunday */
-	.am_pm_indicator = MCP794XX_AM_INDICATOR,       /**< am and pm indicator is ignored when using 24hr time format */
-	.local_time_zone = -10                          /**< local time zone Relative to UTC/GMT */
+	.time_Format = MCP794XX_24HR_FORMAT,    	/**< 24hr time format */
+	.weekDay = MCP794XX_WKDAY_SUNDAY,       	/**< week day Sunday */
+	.am_pm_indicator = MCP794XX_AM_INDICATOR,	/**< am and pm indicator is ignored when using 24hr time format */
+	.local_time_zone = -10			/**< local time zone Relative to UTC/GMT */
 };
 
 struct mcp794xx_time_s alarm_default_time = {           /**< alarm default time and date */
