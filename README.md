@@ -1,4 +1,4 @@
-
+ 
 
 <div align=center>
 <img src="Document/Image/avento.png" width="400" height="200"/>
@@ -43,11 +43,11 @@ The Library masters SHT4x is the full-function driver of the SHT4x sensors serie
 
 
   ### Examples
-  - [STM32L432 (STM32CubeIDE)](https://github.com/LibraryMasters/sht4x/tree/master/Project%20Example/STM32L432/sht40x_temp_sens_k423kc)
-  - [PIC24FJ128GA705 (MPLAB X IDE)](https://github.com/LibraryMasters/sht4x/tree/master/Project%20Example/PIC24FJ128GA705/sht40x_Temp_himidity_sens.X)
-  - [SAMD21G18 (Atmel studio 7)](https://github.com/LibraryMasters/sht4x/tree/master/Project%20Example/SAMD21/sht40x_Temp_humidity)
-  - [ATMEGA4808 (Atmel studio 7)](https://github.com/LibraryMasters/sht4x/tree/master/Project%20Example/ATMEGA4808/sht40x_Temp_humidity)
-  - [RP2040 Pi Pico (VScode)](https://github.com/LibraryMasters/sht4x/tree/master/Project%20Example/RP2040%20Pi%20Pico/sht40x_Temp_humidity)
+  - [STM32L432 (STM32CubeIDE)](https://github.com/LibraryMasters/mcp794xx/tree/master/Project%20Example/STM32L432KCU6)
+  - [PIC24FJ128GA705 (MPLAB X IDE)](https://github.com/LibraryMasters/mcp794xx/tree/master/Project%20Example/PIC24FJ128GA705/mcp794xx_rtc_pic24.X)
+  - [SAMD21G18 (Atmel studio 7)](https://github.com/LibraryMasters/mcp794xx/tree/master/Project%20Example/ATSAMD21G18A/mcp794xx_rtc_SAMD21)
+  - [ATMEGA4808 (Atmel studio 7)](https://github.com/LibraryMasters/mcp794xx/tree/master/Project%20Example/mcp794xx_rtc_atmega4808)
+  - [RP2040 Pi Pico (VScode)](https://github.com/LibraryMasters/mcp794xx/tree/master/Project%20Example/RP2040%20Pi%20Pico/mcp794xx_rtc_RP2040)
   ### Usage
   #### example basic
 
@@ -457,7 +457,7 @@ uint8_t mcp794xx_interface_i2c_write(uint8_t u8Addr, uint8_t *pBuf, uint8_t u8Le
   ```
 
   ### Document
-  [datasheet](https://github.com/LibraryMasters/sht4x/blob/master/Document/Datasheet_SHT4x%20temperature%20sensor.pdf)
+  [datasheet](https://github.com/LibraryMasters/mcp794xx/tree/master/Document)
   
   ### Contribute
    1. Clone repo and create a new branch: ```https://github.com/LibraryMasters/mcp794xx_PR.git```
