@@ -53,7 +53,6 @@ The Library masters SHT4x is the full-function driver of the SHT4x sensors serie
 
   ```C
 #include "mcp794xx_driver_basic.h"
-#include <unistd.h>
 
 
 typedef enum{                   /**< driver test state chine */
