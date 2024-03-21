@@ -90,16 +90,16 @@ uint8_t i2c_write(uint8_t addr, uint8_t *buf, uint16_t len);
 uint8_t i2c_read(uint8_t addr, uint8_t *buf, uint16_t len);
 
 struct mcp794xx_time_s default_time_date = {   	        /**< default time and date Tuesday 24/12/2023 20:24:48*/
-	.year    = 23,          							/**< year 2023*/
-	.date    = 24,         	 							/**< date 24th */
-	.hour    = 20,										/**< hour 8pm */
-	.minute  = 24,										/**< minute 24 */
-	.second  = 48,           							/**< seconds 48 */
-	.month   = MCP794XX_MTH_DECEMBER,					/**< month of December */
-	.time_Format = MCP794XX_24HR_FORMAT,                /**< 24hr time format */
-	.weekDay = MCP794XX_WKDAY_SUNDAY,                   /**< week day Sunday */
-	.am_pm_indicator = MCP794XX_AM_INDICATOR,          	/**< am and pm indicator is ignored when using 24hr time format */
-	.local_time_zone = -10                              /**< local time zone Relative to UTC/GMT */
+	.year    = 23,          			/**< year 2023*/
+	.date    = 24,         	 			/**< date 24th */
+	.hour    = 20,					/**< hour 8pm */
+	.minute  = 24,					/**< minute 24 */
+	.second  = 48,           			/**< seconds 48 */
+	.month   = MCP794XX_MTH_DECEMBER,		/**< month of December */
+	.time_Format = MCP794XX_24HR_FORMAT,            /**< 24hr time format */
+	.weekDay = MCP794XX_WKDAY_SUNDAY,               /**< week day Sunday */
+	.am_pm_indicator = MCP794XX_AM_INDICATOR,       /**< am and pm indicator is ignored when using 24hr time format */
+	.local_time_zone = -10                          /**< local time zone Relative to UTC/GMT */
 };
 
 struct mcp794xx_time_s alarm_default_time = {           /**< alarm default time and date */
@@ -113,7 +113,7 @@ struct mcp794xx_time_s alarm_default_time = {           /**< alarm default time 
 	.am_pm_indicator = MCP794XX_AM_INDICATOR          	/**< am and pm indicator is ignored when using 24hr time format */
 };
 
-mcp794xx_time_t now, alarm, pwr_fail, local, gmt, compile_time_date;          /**< define a new time objects to read current time and date, alarm time and date and power fail time stamp */
+mcp794xx_time_t now, alarm, pwr_fail, local, gmt, compile_time_date;            /**< define a new time objects to read current time and date, alarm time and date and power fail time stamp */
 uint8_t alarm_mask, previous_seconds;
 uint8_t alarm_flag, set_time_status;
 bool pwr_fail_read, set_alarm_status;
@@ -125,7 +125,7 @@ uint8_t *pUnique_id;
 uint8_t *pSram_data_read;
 uint8_t *pSram_data_write;
 
-mcp794xx_irq_callback_t mcp794x_irq_cb = mcp794xx_basic_irq_handler;	/**< define a callback function for external interrupt */
+mcp794xx_irq_callback_t mcp794x_irq_cb = mcp794xx_basic_irq_handler;		/**< define a callback function for external interrupt */
 
 int index;
 
@@ -164,10 +164,10 @@ int main()
 			{
 				mcp794xx_basic_set_time_date(&default_time_date);   							/**< set rtc time and date manually */
 
-				#ifdef USE_COMPILE_TIME_DATE         											/**< set time and date using compile time and date (if this routine fails use default time and date above )*/
+				#ifdef USE_COMPILE_TIME_DATE         									/**< set time and date using compile time and date (if this routine fails use default time and date above )*/
 
-				mcp794xx_basic_get_compile_time_date(__TIME__, __DATE__, &compile_time_date);   /**< read and convert compile time and date to rtc time object */
-				mcp794xx_basic_set_time_date(&compile_time_date);								/**< set time and date */
+				mcp794xx_basic_get_compile_time_date(__TIME__, __DATE__, &compile_time_date);  				/**< read and convert compile time and date to rtc time object */
+				mcp794xx_basic_set_time_date(&compile_time_date);							/**< set time and date */
 				#endif
 
 				test.state = READ_TIME_AND_DATE;
@@ -176,7 +176,7 @@ int main()
 
 			case READ_TIME_AND_DATE:
 			{
-				mcp794xx_basic_get_current_time_date(&now);				/**< read current time and date */
+				mcp794xx_basic_get_current_time_date(&now);		/**< read current time and date */
 
 				if(now.second != previous_seconds){                     /**< print time every second */
 					previous_seconds = now.second;
@@ -204,20 +204,20 @@ int main()
 				{
 					set_alarm_status = true;
 
-					mcp794xx_basic_enable_alarm(MCP794XX_ALARM0, MCP794XX_INT_POLARITY_LOW);								/**< enable alarm 0 and set interrupt output polarity logic low*/
+					mcp794xx_basic_enable_alarm(MCP794XX_ALARM0, MCP794XX_INT_POLARITY_LOW);					/**< enable alarm 0 and set interrupt output polarity logic low*/
 					mcp794xx_basic_set_alarm_time_date(MCP794XX_ALARM0, MCP794XX_MASK_HOURS, &alarm_default_time);			/**< set hour alarm (alarm will fire an interrupt when hour match) */
 
-					mcp794xx_basic_get_alarm_time_date(MCP794XX_ALARM0, &alarm_mask, &alarm);     							/**< read alarm time, date and alarm mask set(this operation is not necessary when setting alarm) */
-					mcp794xx_interface_debug_print("alarm time: %.2d:",alarm.hour);											/**< print time and date set*/
+					mcp794xx_basic_get_alarm_time_date(MCP794XX_ALARM0, &alarm_mask, &alarm);     					/**< read alarm time, date and alarm mask set(this operation is not necessary when setting alarm) */
+					mcp794xx_interface_debug_print("alarm time: %.2d:",alarm.hour);							/**< print time and date set*/
 				}
 
                mcp794xx_basic_get_alarm_interrupt_flag(MCP794XX_ALARM0, &alarm_flag);       								/**< read alarm interrupt flag */
 
-			   if(alarm_flag == 1)    																						/**< this routine should be executed inside the external interrupt callback function */
+			   if(alarm_flag == 1)    													/**< this routine should be executed inside the external interrupt callback function */
 			   {
-				   mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM0);												/**< clear alarm time flag (note that if time still match alarm flag will be held */
+				   mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM0);								/**< clear alarm time flag (note that if time still match alarm flag will be held */
 
-//				   mcp794xx_basic_irq_callBack(MCP794XX_ALARM0, mcp794x_irq_cb);											/**< interrupt callback function (to be called in the external interrupt callback function )*/
+//				   mcp794xx_basic_irq_callBack(MCP794XX_ALARM0, mcp794x_irq_cb);							/**< interrupt callback function (to be called in the external interrupt callback function )*/
 			   }
 			   test.state = READ_TIME_AND_DATE;
 				break;
@@ -229,7 +229,7 @@ int main()
 				if(set_alarm_status == false)
 				{
 					set_alarm_status = true;
-					mcp794xx_basic_enable_countdown_interrupt();							/**< enable count down timer interrupt (this routine uses ALARM1) and generate an interrupt when time expires*/
+					mcp794xx_basic_enable_countdown_interrupt();					/**< enable count down timer interrupt (this routine uses ALARM1) and generate an interrupt when time expires*/
 					mcp794xx_basic_set_countdown_time(5, MCP794XX_CNTDWN_SECONDS);			/**< set count down time, fires an interrupt every 5 sec(this routine will disable ALARM0)*/
 				}
 
@@ -238,7 +238,7 @@ int main()
 
 				if(alarm_flag == 1)
 				{
-					mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM1);				/**< clear interrupt flag */
+					mcp794xx_basic_clr_alarm_interrupt_flag(MCP794XX_ALARM1);			/**< clear interrupt flag */
 					mcp794xx_basic_set_countdown_time(5, MCP794XX_CNTDWN_SECONDS);			/**< reload time in register every when count down expires  (not advisable to call this function within an interrupt callback function)*/
 
 //					mcp794xx_basic_irq_callBack(MCP794XX_ALARM1, mcp794x_irq_cb);			/**< interrupt callback function (to be called in the external interrupt callback function) */
@@ -253,7 +253,7 @@ int main()
 				{
 					pwr_fail_read = true;
 					mcp794xx_basic_get_pwr_fail_time_stamp(MCP794XX_PWR_UP_TIME_STAMP, &pwr_fail);           /**< read power fail time stamp */
-					mcp794xx_basic_enable_ext_batt_bckup_pwr();											     /**< enable backup power for future power fail event (calling this function will clear power fail time stamp event) */
+					mcp794xx_basic_enable_ext_batt_bckup_pwr();						/**< enable backup power for future power fail event (calling this function will clear power fail time stamp event) */
 				}
 				/*< print time stamp */
 				mcp794xx_interface_debug_print("pwr fail:%.2d:",pwr_fail.hour);
@@ -267,7 +267,7 @@ int main()
 
 			case TEST_FREQ_OUT:
 			{
-				mcp794xx_basic_enable_sqr_wave_output();									/**< enable frequency output */
+				mcp794xx_basic_enable_sqr_wave_output();					/**< enable frequency output */
 				mcp94xx_basic_set_sqr_wave_output_freq(MCP794XX_SQR_FREQ_SELCET_4_096KHZ);	/**< set frequency output value */
 				break;
 			}
@@ -293,18 +293,18 @@ int main()
 				if(pUnique_id == NULL)
 					mcp794xx_interface_debug_print("failed to allocate memory\n\r");
 
-                mcp794xx_basic_uid_read((uint8_t*)pUnique_id);                            /**< read device unique identifier */
+                mcp794xx_basic_uid_read((uint8_t*)pUnique_id);                            		  /**< read device unique identifier */
                 for(index = 0; index < UID_MAX_LENGTH; index++){					  /*< print id */
                     mcp794xx_interface_debug_print("%.2p :",pUnique_id[index]);
                 }
-                free(pUnique_id);														  /**< free memory allocated*/
+                free(pUnique_id);									  /**< free memory allocated*/
 
 				break;
 			}
 
 			case READ_SRAM:
 			{
-				pSram_data_read = (uint8_t *)calloc(SRAM_MEMORY_SIZE, sizeof(uint8_t));     						  /**< allocate memory for data to read */
+				pSram_data_read = (uint8_t *)calloc(SRAM_MEMORY_SIZE, sizeof(uint8_t));     			      /**< allocate memory for data to read */
 				if(pSram_data_read == NULL)
 					mcp794xx_interface_debug_print("failed to allocate memory\n\r");
 
@@ -339,13 +339,13 @@ int main()
 
 			case WIPE_SRAM:
 			{
-				mcp794xx_basic_sram_wipe();													/**< wipe the whole sram memory */
+				mcp794xx_basic_sram_wipe();								/**< wipe the whole sram memory */
 				break;
 			}
 
 			case READ_EEPROM:
 			{
-				pEeprom_data_read = (uint8_t *)calloc(EEPROM_MEMORY_SIZE, sizeof(uint8_t));     						  /**< allocate memory for data to read */
+				pEeprom_data_read = (uint8_t *)calloc(EEPROM_MEMORY_SIZE, sizeof(uint8_t));     	/**< allocate memory for data to read */
 				if(pEeprom_data_read == NULL)
 					mcp794xx_interface_debug_print("failed to allocate memory\n\r");
 
@@ -364,14 +364,14 @@ int main()
 				if(pEeprom_data_write == NULL)
 					mcp794xx_interface_debug_print("failed to allocate dynamic memory\n\r");
 
-				for(index = 0; index < EEPROM_PAGE_SIZE; index++){                          					  /**< fill the first few byte of the memory 0 - 10 */
+				for(index = 0; index < EEPROM_PAGE_SIZE; index++){                          	   /**< fill the first few byte of the memory 0 - 10 */
 					pEeprom_data_write[index] = index;
 					mcp794xx_interface_debug_print("to write :%.2p\n\r", pEeprom_data_write[index]);
 				}
 
-				mcp794xx_basic_eeprom_write_byte(0x00, (uint8_t *)pEeprom_data_write, EEPROM_PAGE_SIZE);      		  /**< write the first 8 bytes address (keep in mind the 5ms Write Cycle Time before attempt to read back written data)*/
+				mcp794xx_basic_eeprom_write_byte(0x00, (uint8_t *)pEeprom_data_write, EEPROM_PAGE_SIZE);      		/**< write the first 8 bytes address (keep in mind the 5ms Write Cycle Time before attempt to read back written data)*/
 
-				free(pEeprom_data_write);          													  /**< allocated memory */
+				free(pEeprom_data_write);          									/**< allocated memory */
 
 				break;
 			}
