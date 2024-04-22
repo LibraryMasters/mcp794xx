@@ -55,7 +55,7 @@ The Library masters SHT4x is the full-function driver of the SHT4x sensors serie
 #include "mcp794xx_driver_basic.h"
 
 
-typedef enum{                   /**< driver test state chine */
+typedef enum{                   /**< driver test state machine */
 
 	SET_TIME_DATE,
 	READ_TIME_AND_DATE,
