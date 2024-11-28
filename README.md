@@ -12,7 +12,7 @@ Using a low-cost 32.768 kHz crystal or other clock source, time is tracked in ei
 As an interrupt or wakeup signal, a multifunction open drain output can be programmed as an Alarm Out or as a Clock Out that supports 4 selectable frequencies.
 In addition, non-volatile memory is included along with a Unique ID in a locked section of EEPROM that is factory programmed with an MAC Address.
 
-The Library masters SHT4x is the full-function driver of the SHT4x sensors series (MCP7940N, MCP7940M, MCP79401, MCP79402, MCP79410, MCP79411, MCP79412). The driver is written in C language with Code Blocks.
+The Library masters SHT4x is the full-function driver of the MCP794XX sensors series (MCP7940N, MCP7940M, MCP79401, MCP79402, MCP79410, MCP79411, MCP79412). The driver is written in C language with Code Blocks.
 
 ### Table of Contents
 
